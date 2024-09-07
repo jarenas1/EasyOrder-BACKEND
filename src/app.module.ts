@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configurations from './common/config/configurations';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserModule } from './user/user.module';
 @Module({
   imports: [ConfigModule.forRoot({
     load: [configurations],
@@ -13,7 +14,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     useFactory: (configService: ConfigService) => ({
       type: 'postgres',
       host: configService.get('database.host'),
-      port: +configService.get('database.port'),
+      port: configService.get('database.port'),
       username: configService.get('database.user'),
       password: configService.get('database.password'),
       database: configService.get('database.database'),
@@ -21,6 +22,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       synchronize: true,
     }),
 
-  })]
+  }),
+  UserModule]
 })
 export class AppModule {}
