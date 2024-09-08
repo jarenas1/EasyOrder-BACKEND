@@ -3,6 +3,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import configurations from './common/config/configurations';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
+import { SeedModule } from './seed/seed.module';
+import { RoleModule } from './role/role.module';
+import { TableStatusModule } from './table-status/table-status.module';
+import { OrderStatusModule } from './order-status/order-status.module';
 @Module({
   imports: [ConfigModule.forRoot({
     load: [configurations],
@@ -23,6 +27,10 @@ import { UserModule } from './user/user.module';
     }),
 
   }),
-  UserModule]
+  UserModule,
+  SeedModule,
+  RoleModule,
+  TableStatusModule,
+  OrderStatusModule]
 })
 export class AppModule {}
