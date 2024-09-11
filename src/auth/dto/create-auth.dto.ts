@@ -1,8 +1,7 @@
-import { IsEmail, IsNotEmpty, isNotEmpty, IsString, MinLength } from "class-validator"
+import { IsNotEmpty, IsString, MinLength } from "class-validator"
 import { Role } from "src/role/entities/role.entity"
 
-export class CreateUserDto {
-
+export class RegisterDto {
     @IsString()
     @IsNotEmpty()
     @MinLength(5)
