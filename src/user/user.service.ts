@@ -6,6 +6,7 @@ import { User } from './entities/user.entity';
 import { Repository, Table } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { error } from 'console';
+import { Role } from 'src/role/entities/role.entity';
 
 @Injectable()
 export class UserService {
@@ -39,7 +40,7 @@ export class UserService {
 
   async findByUsername(username:string) {
     try {
-      return await this.userRepository.findOneBy({username})
+      return await this.userRepository.findOne({where: {username}, relations: {role: true}})
     } catch (error) {
       throw new NotFoundException(error.message)
     }

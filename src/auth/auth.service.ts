@@ -31,7 +31,7 @@ export class AuthService {
       throw new HttpException(error.message, HttpStatus.UNAUTHORIZED)
     }
   }
-  
+
   async checkjwt(arg: string) {
     const [type, jwt] = arg.split(" ")
     return await this.jwtService.verifyAsync(jwt, {secret: this.configService.get("SECRET") })

@@ -1,5 +1,5 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import {  RolesDecorator} from 'src/common/enums';
+import {  RolesEnum} from 'src/common/enums';
 import { RoleService } from 'src/role/role.service';
 
 
@@ -11,7 +11,7 @@ export class SeedService {
 
   async roleSeeder() {
     try {
-      const result = await this.roleService.createManySeed([{type:RolesDecorator.admin}, {type:RolesDecorator.mesero}])
+      const result = await this.roleService.createManySeed([{type:RolesEnum.admin}, {type:RolesEnum.mesero}])
       if(!result) {
         throw new Error("Role already exist")
       }

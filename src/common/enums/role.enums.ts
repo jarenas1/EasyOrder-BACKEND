@@ -1,4 +1,4 @@
-export enum RolesDecorator {
+export enum RolesEnum {
     admin= "admin",
     mesero= "mesero"
 }

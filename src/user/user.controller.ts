@@ -3,6 +3,9 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { RoleDecorator } from 'src/common/decorators/role.decorator';
+import { RolesGuard } from 'src/auth/guard/role.guard';
+import { RolesEnum } from 'src/common/enums';
 
 @Controller('user')
 export class UserController {
@@ -28,7 +31,9 @@ export class UserController {
     return this.userService.update(id, updateUserDto);
   }
 
-  @UseGuards(JwtAuthGuard)
+
+  @RoleDecorator(RolesEnum.admin)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Delete(':id')
   remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.userService.remove(id);
