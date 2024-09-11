@@ -1,5 +1,4 @@
-export const roles = [
-    {type: "admin"},
-    {type: "mesero"}
-]
-
+export enum RolesDecorator {
+    admin= "admin",
+    mesero= "mesero"
+}

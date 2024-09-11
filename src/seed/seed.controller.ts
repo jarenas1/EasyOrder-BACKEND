@@ -9,14 +9,4 @@ export class SeedController {
   seedRole() {
     return this.seedService.roleSeeder();
   }
-
-  @Get("table-status")
-  seedTableStatus() {
-    return this.seedService.tableStatusSeeder();
-  }
-
-  @Get("order-status")
-  seedOrderStatus() {
-    return this.seedService.orderStatusSeeder();
-  }
 }
