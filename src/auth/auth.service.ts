@@ -22,7 +22,7 @@ export class AuthService {
     try {
       const {password, ...user} = await this.userService.findByUsername(loginUser.username);
       const match = await bcrypt.compare(loginUser.password,password)
-      if (!user && !password) {
+      if (!user && !password && !match) {
         throw new Error("User with that credentials is unauthorized");
       }
       return user
@@ -32,17 +32,15 @@ export class AuthService {
     }
   }
 
-  async checkjwt(arg: string) {
-    const [type, jwt] = arg.split(" ")
-    return await this.jwtService.verifyAsync(jwt, {secret: this.configService.get("SECRET") })
-  }
-
   async login(loginUser: LoginDto) {
-    const {id, ...userAuthorized} = await this.validateUser(loginUser)
-    if (userAuthorized) {
-      let ACCESS_TOKEN = await this.jwtService.signAsync({sub: id, user: userAuthorized}, {secret: this.configService.get("SECRET")})
-      return { ACCESS_TOKEN }
+    try {
+      const {id, ...userAuthorized} = await this.validateUser(loginUser)
+      if (userAuthorized) {
+        let ACCESS_TOKEN = await this.jwtService.signAsync({sub: id, user: userAuthorized}, {secret: this.configService.get("SECRET")})
+        return { ACCESS_TOKEN }
+      }
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.UNAUTHORIZED)
     }
-
   }
 }

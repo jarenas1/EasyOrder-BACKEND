@@ -21,6 +21,15 @@ export class UserService {
         throw new Error('Username already exists')
       }
 
+      const users = await this.findAll()
+      for(let i=0; i< users.length; i++) {
+        let match = await bcrypt.compare(createUserDto.password, users[i].password)
+        if (match) {
+          throw new Error("password already exists")
+        }
+      }
+
+
       let password = await bcrypt.hash(createUserDto.password, 10)
       createUserDto = { ...createUserDto, password}
       const newUser = this.userRepository.create(createUserDto)
@@ -32,10 +41,14 @@ export class UserService {
   }
 
   findAll() {
-    return this.userRepository.find({relations: {
-      tables: true,
-      role: true
-    }})
+    try {
+      return this.userRepository.find({relations: {
+        tables: true,
+        role: true
+      }})
+    } catch (error) {
+      throw new NotFoundException()
+    }
   }
 
   async findByUsername(username:string) {
@@ -47,13 +60,9 @@ export class UserService {
   }
 
   async findOne(id: string) {
-    const found = await this.userRepository.findOneBy({id})
-
-    if (!found) {
-      throw new NotFoundException("User not found aqui")
-    }
-
-    return found
+      const found = await this.userRepository.findOneBy({id})
+      if (!found) {throw new NotFoundException("User not found")}
+      return found
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
@@ -71,7 +80,11 @@ export class UserService {
   }
 
   async remove(id: string) {
-    await this.userRepository.delete(id)
-    return {message: "Deleted Successful"}
+    try {
+      await this.userRepository.delete(id)
+      return {message: "Deleted Successful"}
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
   }
 }
