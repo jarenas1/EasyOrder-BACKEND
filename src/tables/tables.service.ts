@@ -1,7 +1,9 @@
+// src/tables/tables.service.ts
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Table } from './entities/table.entity';
+import { CreateTableDto } from './dto/create-table.dto';
 import { TableGateway } from './websocket.gateway';
 
 @Injectable()
@@ -15,7 +17,7 @@ export class TableService {
   async getTablesByUserId(userId: string): Promise<Table[]> {
     return this.tableRepository.find({
       where: { user: { id: userId } },
-      relations: ['user'], // Para asegurarse de que la relación User se cargue
+      relations: ['user'],
     });
   }
 
@@ -33,6 +35,8 @@ export class TableService {
     return table;
   }
 
-  
+  async createTable(createTableDto: CreateTableDto): Promise<Table> {
+    const newTable = this.tableRepository.create(createTableDto);
+    return await this.tableRepository.save(newTable);
+  }
 }
-

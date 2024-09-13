@@ -10,10 +10,10 @@ import { Table } from '../tables/entities/table.entity';
 export class SessionsService {
   constructor(
     @InjectRepository(Session)
-    private readonly sessionsRepository: Repository<Session>, // repositorio de sessions
+    private readonly sessionsRepository: Repository<Session>, 
 
     @InjectRepository(Table)
-    private readonly tablesRepository: Repository<Table>,  // repositorio de tables
+    private readonly tablesRepository: Repository<Table>,  
   ) {}
 
   async create(createSessionDto: CreateSessionDto): Promise<Session> {
@@ -29,8 +29,8 @@ export class SessionsService {
     const session = this.sessionsRepository.create({
       idSolicitud: createSessionDto.idSolicitud,
       name: createSessionDto.name,
-      paid: false, // paid por defecto en false
-      table: table,  // Asignar la entidad de tabla completa
+      paid: false, 
+      table: table,  
     });
   
     return this.sessionsRepository.save(session);
