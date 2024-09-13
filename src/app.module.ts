@@ -1,8 +1,10 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configurations from './common/config/configurations';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
+import { SessionsModule } from './sessions/sessions.module';
 @Module({
   imports: [ConfigModule.forRoot({
     load: [configurations],
@@ -23,6 +25,7 @@ import { UserModule } from './user/user.module';
     }),
 
   }),
-  UserModule]
+  UserModule,
+  SessionsModule]
 })
 export class AppModule {}
