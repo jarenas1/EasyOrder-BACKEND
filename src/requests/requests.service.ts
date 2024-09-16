@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { RequestsGateway } from './requests.gateway';
 import { RequestDto } from './dto/request.dto';
 import { ProductsService } from 'src/products/products.service';
+import { RequestUpdateDto } from './dto/request-update.dto';
 
 @Injectable()
 export class RequestsService {
@@ -18,7 +19,7 @@ export class RequestsService {
     async createRequest(request: RequestDto) {
         //Aquí debo buscar las FK para poder crear la solicitud
         const productFound = await this.productService.getProductById(request.productId);
-        
+
         if (!productFound) {
             return new HttpException('Producto no encontrado', HttpStatus.NOT_FOUND);
         }
@@ -29,7 +30,7 @@ export class RequestsService {
                 status: 'Recibido', //Este me lo tira por defecto
             }
         );
-    
+
         await this.requestRepository.save(newRequest);
 
         //Aquí les tiro la solicitud a los meseros en el servidor por medio del evento websocket
@@ -37,9 +38,34 @@ export class RequestsService {
         return newRequest;
     }
 
-    getRequests () {
+    getRequests() {
         return this.requestRepository.find({
             relations: ['product']//Así se llama en la entidad y es para que nos traiga la información
         });
+    }
+
+    //Vamos a meterle el método para que el mesero actualice el estado
+    async updateRequestStatus(id: number, updateRequestDto: RequestUpdateDto) {
+        //Voy a desectructurar para traerme solo el campo de status del dto
+        // const status = updateRequestDto.status;
+        const { status } = updateRequestDto;
+        //Aquí buscamos la solicitud
+        const requestFound = await this.requestRepository.findOne({
+            where: {
+                id
+            },
+            relations: ['product']//le incluimos la relación de la entidad de product
+        });
+
+        if (!requestFound) {
+            return new HttpException(`Solicitud no encontrada: ${id}`, HttpStatus.NOT_FOUND);
+        }
+
+        //Aquí actualizamos el estado { status }
+        requestFound.status = status; 
+
+        const updatedRequest = await this.requestRepository.save(requestFound);
+        this.requestGateway.notifyRequestStatusChange(updatedRequest)
+        return updatedRequest;
     }
 }

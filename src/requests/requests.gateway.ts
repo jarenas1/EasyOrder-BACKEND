@@ -1,8 +1,9 @@
-import { ConnectedSocket, OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
+import { OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Server, Socket } from "socket.io";
 
 // Dto para los requests
 import { RequestDto } from './dto/request.dto';
+import { Request } from './request.entity';
 
 @WebSocketGateway({ cors: { origin: '*' }})
 export class RequestsGateway implements OnGatewayConnection, OnGatewayDisconnect {
@@ -30,4 +31,10 @@ export class RequestsGateway implements OnGatewayConnection, OnGatewayDisconnect
   sendRequest(request: RequestDto) {
     this.server.emit('new-request', request);
   }
+
+  //Con este voy a notificar al cliente cuando el estado de la solicitud cambie
+  notifyRequestStatusChange(request: Request) {
+    this.server.emit('request-status-change', request);
+  }
+
 }

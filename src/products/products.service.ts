@@ -38,7 +38,7 @@ export class ProductsService {
             where: {
                 id
             },
-            relations: ['requests']
+            // relations: ['requests'] //Este visaje lo quito porque no quiero que se me muestre un array en products
         });
         //Si el producto no existe, lanzamos una excepción
         if (!productFound) {

@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { RequestsService } from './requests.service';
 import { RequestDto } from './dto/request.dto';
 import { Request } from './request.entity';
+import { RequestUpdateDto } from './dto/request-update.dto';
 
 @Controller('requests')
 export class RequestsController {
@@ -16,5 +17,11 @@ export class RequestsController {
     @Get()
     getRequests(): Promise<Request[]> {
         return this.requestService.getRequests();
+    }
+
+    //Endpoint para que los meseros actualicen el estado
+    @Patch(':id/status')
+    async updateRequestStatus(@Param('id') id: number, @Body() updateRequestDto: RequestUpdateDto) {
+        return this.requestService.updateRequestStatus(id, updateRequestDto);
     }
 }
