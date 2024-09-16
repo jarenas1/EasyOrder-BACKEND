@@ -21,7 +21,6 @@ export class SessionsService {
   ) {}
 
   @RoleDecorator(RolesEnum.mesero)
-  // @UseGuards(JwtAuthGuard, RolesGuard)
   async create(createSessionDto: CreateSessionDto): Promise<Session> {
     try {
       // Buscar la tabla relacionada por ID
@@ -34,7 +33,6 @@ export class SessionsService {
       }
 
       const session = this.sessionsRepository.create({
-        id: createSessionDto.id,
         name: createSessionDto.name,
         paid: false, 
         table: table, 
@@ -42,6 +40,7 @@ export class SessionsService {
 
       return await this.sessionsRepository.save(session);
     } catch (error) {
+      console.error('Error al crear la sesión:', error);  // Logging adicional
       throw new InternalServerErrorException('Failed to create session', error.message);
     }
   }
