@@ -1,5 +1,5 @@
 import { Role } from "src/role/entities/role.entity";
-import { Table } from "src/table/entities/table.entity";
+import { Table } from "src/tables/entities/table.entity";
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("users")
@@ -19,7 +19,7 @@ export class User {
     @Column("text", {unique:true})
     password: string
 
-    @ManyToOne(() => Role, role => role.users)
+    @ManyToOne(() => Role, role => role.users, {onDelete: "CASCADE"})
     role: Role;
 
     @OneToMany(() => Table, table => table.user, { nullable: true})

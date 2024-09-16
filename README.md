@@ -17,15 +17,13 @@
 docker-compose up -d    o    docker compose up -d
 """
 
-3. para crear el seed de role haz una petición de l siguiente manera
+3. para crear el seed de role haz peticiones a los siguientes endpoints (en el orden que se muestran):
+
 """
 Get api/v1/seed/role
 """
 
 """
-Get api/v1/seed/table-status
+Get api/v1/seed
 """
 
-"""
-Get api/v1/seed/order-status
-"""

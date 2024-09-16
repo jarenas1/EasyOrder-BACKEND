@@ -6,12 +6,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { SeedModule } from './seed/seed.module';
 import { RoleModule } from './role/role.module';
-import { TableModule } from './table/table.module';
 import { AuthModule } from './auth/auth.module';
+import { RequestsModule } from './requests/requests.module';
+import { ProductsModule } from './products/products.module';
 
 
 
 import { SessionsModule } from './sessions/sessions.module';
+import { TablesModule } from './tables/tables.module';
 @Module({
   imports: [ConfigModule.forRoot({
     load: [configurations],
@@ -32,6 +34,12 @@ import { SessionsModule } from './sessions/sessions.module';
     }),
 
   }),
-  UserModule]
+  UserModule,
+  SeedModule,
+  RoleModule,
+  AuthModule,
+  TablesModule,
+  RequestsModule,
+  ProductsModule]
 })
 export class AppModule {}

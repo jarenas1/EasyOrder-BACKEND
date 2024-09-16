@@ -34,7 +34,7 @@ export class SessionsService {
       }
 
       const session = this.sessionsRepository.create({
-        idSolicitud: createSessionDto.idSolicitud,
+        id: createSessionDto.id,
         name: createSessionDto.name,
         paid: false, 
         table: table, 
@@ -76,12 +76,12 @@ export class SessionsService {
 
   @RoleDecorator(RolesEnum.mesero)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  async updatePaid(idSolicitud: string, paid: boolean): Promise<Session> {
+  async updatePaid(id: string, paid: boolean): Promise<Session> {
     try {
-      const session = await this.sessionsRepository.findOneBy({ idSolicitud });
+      const session = await this.sessionsRepository.findOneBy({ id });
 
       if (!session) {
-        throw new NotFoundException(`Session with ID ${idSolicitud} not found`);
+        throw new NotFoundException(`Session with ID ${id} not found`);
       }
 
       session.paid = paid;
@@ -90,7 +90,7 @@ export class SessionsService {
       if (error instanceof NotFoundException) {
         throw error;
       }
-      throw new InternalServerErrorException(`Failed to update session ${idSolicitud}`, error.message);
+      throw new InternalServerErrorException(`Failed to update session ${id}`, error.message);
     }
   }
 }

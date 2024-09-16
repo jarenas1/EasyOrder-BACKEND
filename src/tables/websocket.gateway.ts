@@ -9,6 +9,5 @@ export class TableGateway {
   updateTableStatus(tableId: string, status: string) {
     this.server.emit('tableStatusUpdate', { tableId, status });
   }
-
   
 }

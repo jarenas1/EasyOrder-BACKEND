@@ -47,5 +47,9 @@ export class TableController {
   @Delete(':tableId')
   deleteTable(@Param('tableId') tableId: string) {
     return this.tableService.deleteTable(tableId);
+<<<<<<< HEAD
   }
+=======
+}
+>>>>>>> feat/hu-5-Luis
 }

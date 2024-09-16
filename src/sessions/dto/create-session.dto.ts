@@ -5,7 +5,7 @@ export class CreateSessionDto {
     
     @IsString()
     @IsNotEmpty()
-    idSolicitud: string;
+    id: string;
 
     @IsString()
     @IsNotEmpty()

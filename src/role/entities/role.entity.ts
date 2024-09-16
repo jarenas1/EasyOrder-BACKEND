@@ -10,6 +10,6 @@ export class Role {
     @Column("text")
     type: string
 
-    @OneToMany(() => User, user => user.role)
+    @OneToMany(() => User, user => user.role, {onDelete: "CASCADE"})
     users: User[]
 }
