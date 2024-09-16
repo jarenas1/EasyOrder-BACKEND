@@ -68,4 +68,18 @@ export class RequestsService {
         this.requestGateway.notifyRequestStatusChange(updatedRequest)
         return updatedRequest;
     }
+
+    async getRequestById(id: number) {
+        const requestFound = await this.requestRepository.findOne({
+            where: {
+                id
+            },
+            relations: ['product']//le incluimos la relación de la entidad de product
+        });
+
+        if (!requestFound) {
+            return new HttpException(`Solicitud no encontrada: ${id}`, HttpStatus.NOT_FOUND);
+        }
+        return requestFound;
+    }
 }

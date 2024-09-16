@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { RequestsService } from './requests.service';
 import { RequestDto } from './dto/request.dto';
 import { Request } from './request.entity';
@@ -17,6 +17,11 @@ export class RequestsController {
     @Get()
     getRequests(): Promise<Request[]> {
         return this.requestService.getRequests();
+    }
+
+    @Get(':id')
+    getRequestById(@Param('id', ParseIntPipe) id: number) {
+        return this.requestService.getRequestById(id);
     }
 
     //Endpoint para que los meseros actualicen el estado
