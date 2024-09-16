@@ -94,12 +94,12 @@ export class SessionsService {
   }
 
   //To Do
-  async getSessionById(id) {
+  async getSessionById(id: string) {
     const sessionFound = await this.sessionsRepository.findOne({
         where: {
             id
         },
-        relations: ['request']//le incluimos la relación de la entidad de request
+        relations: ['requests']//le incluimos la relación de la entidad de request
     });
 
     if (!sessionFound) {

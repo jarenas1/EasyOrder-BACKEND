@@ -30,7 +30,7 @@ export class SessionsController {
   }
 
   @Patch(':id/paid')
-  updatePaid(
+  async updatePaid(
     @Param('id') id: string,
     @Body() updateSessionDto: UpdateSessionDto,
   ) {

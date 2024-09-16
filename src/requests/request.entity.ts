@@ -14,7 +14,7 @@ export class Request {
     quantity: number;
 
     @Column()
-    sessionsId: string;
+    sessionId: string;
 
     @Column({ default: 'Recibido'})//Se le pone ese estado por defecto
     status: string;

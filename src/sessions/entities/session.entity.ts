@@ -19,5 +19,5 @@ export class Session {
     table: Table;
 
     @OneToMany(() => Request, request => request.session)
-    requests: Request;
+    requests: Request[];
 }

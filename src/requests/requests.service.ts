@@ -20,7 +20,7 @@ export class RequestsService {
     async createRequest(request: RequestDto) {
         //Aquí debo buscar las FK para poder crear la solicitud
         const productFound = await this.productService.getProductById(request.productId);
-        const sessionFound = await this.sessionService.getSessionById(request.sessionsId);
+        const sessionFound = await this.sessionService.getSessionById(request.sessionId);
 
         if (!productFound) {
             return new HttpException('Producto no encontrado', HttpStatus.NOT_FOUND);
@@ -79,7 +79,7 @@ export class RequestsService {
             where: {
                 id
             },
-            relations: ['product']//le incluimos la relación de la entidad de product
+            relations: ['product', 'session']//le incluimos la relación de la entidad de product
         });
 
         if (!requestFound) {

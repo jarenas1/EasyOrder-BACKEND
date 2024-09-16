@@ -11,7 +11,7 @@ export class RequestDto {
 
     @IsUUID()
     @IsNotEmpty()
-    sessionsId: string;
+    sessionId: string;
 
     status?: string;
 }
