@@ -19,7 +19,7 @@ export class User {
     @Column("text", {unique:true})
     password: string
 
-    @ManyToOne(() => Role, role => role.users)
+    @ManyToOne(() => Role, role => role.users, {onDelete: "CASCADE"})
     role: Role;
 
     @OneToMany(() => Table, table => table.user, { nullable: true})

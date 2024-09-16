@@ -7,10 +7,16 @@ import { Repository, Table } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { error } from 'console';
 import { Role } from 'src/role/entities/role.entity';
+import { RoleService } from 'src/role/role.service';
+import { RolesEnum } from 'src/common/enums';
+
 
 @Injectable()
 export class UserService {
-  constructor(@InjectRepository(User) private readonly userRepository: Repository<User> ) {}
+  constructor(
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    private readonly roleService: RoleService
+ ) {}
 
   async create(createUserDto: CreateUserDto) {
 
@@ -29,9 +35,13 @@ export class UserService {
         }
       }
 
-
+      const role = await this.roleService.findOneSeed(RolesEnum.mesero)
       let password = await bcrypt.hash(createUserDto.password, 10)
       createUserDto = { ...createUserDto, password}
+
+      if(!createUserDto.role) {
+        createUserDto = { ...createUserDto, password, role: role}
+      }
       const newUser = this.userRepository.create(createUserDto)
       return await this.userRepository.save( newUser)
 
@@ -82,7 +92,7 @@ export class UserService {
   async remove(id: string) {
     try {
       await this.userRepository.delete(id)
-      return {message: "Deleted Successful"}
+      return {message: "Deleted Successfully"}
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR)
     }
