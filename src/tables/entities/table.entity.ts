@@ -2,12 +2,7 @@ import { Session } from "src/sessions/entities/session.entity";
 import { User } from "src/user/entities/user.entity";
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm"
 
-<<<<<<< HEAD
-
-@Entity('Tables')
-=======
 @Entity('tables')
->>>>>>> feat/hu-5-Luis
 export class Table {
     @PrimaryGeneratedColumn('uuid')
     id: string;
