@@ -14,24 +14,24 @@ export class RequestsService {
         @InjectRepository(Request) private requestRepository: Repository<Request>,
         private requestGateway: RequestsGateway,
         private productService: ProductsService,
-        private sessionService: SessionsService,
+        //private sessionService: SessionsService,
     ) { }
 
     async createRequest(request: RequestDto) {
         //Aquí debo buscar las FK para poder crear la solicitud
         const productFound = await this.productService.getProductById(request.productId);
-        const sessionFound = await this.sessionService.getSessionById(request.sessionsId);
+        //const sessionFound = await this.sessionService.getSessionById(request.sessionsId);
 
         if (!productFound) {
             return new HttpException('Producto no encontrado', HttpStatus.NOT_FOUND);
-        } else if (!sessionFound) {
-            return new HttpException('Sesión no encontrada', HttpStatus.NOT_FOUND);
-        }
+        } //else if (!sessionFound) {
+            //return new HttpException('Sesión no encontrada', HttpStatus.NOT_FOUND);
+        //}
         const newRequest = this.requestRepository.create(
             {
                 ...request,
                 product: productFound,// es esta relación product: Product que esta en el request.entity.ts
-                session: sessionFound, // es esta relación session: Session que esta en el request.entity.ts
+                // session: sessionFound, // es esta relación session: Session que esta en el request.entity.ts
                 status: 'Recibido', //Este me lo tira por defecto
             }
         );
@@ -50,7 +50,7 @@ export class RequestsService {
     }
 
     //Vamos a meterle el método para que el mesero actualice el estado
-    async updateRequestStatus(id: number, updateRequestDto: RequestUpdateDto) {
+    async updateRequestStatus(id: string, updateRequestDto: RequestUpdateDto) {
         //Voy a desectructurar para traerme solo el campo de status del dto
         // const status = updateRequestDto.status;
         const { status } = updateRequestDto;
@@ -74,7 +74,7 @@ export class RequestsService {
         return updatedRequest;
     }
 
-    async getRequestById(id: number) {
+    async getRequestById(id: string) {
         const requestFound = await this.requestRepository.findOne({
             where: {
                 id

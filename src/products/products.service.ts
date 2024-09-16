@@ -33,7 +33,7 @@ export class ProductsService {
         return this.productRespository.find();
     }
 
-    async getProductById(id: number) {
+    async getProductById(id: string) {
         const productFound = await this.productRespository.findOne({
             where: {
                 id
@@ -48,7 +48,7 @@ export class ProductsService {
         return productFound;
     }
 
-    async deleteProduct(id: number) {
+    async deleteProduct(id: string) {
         const result = await this.productRespository.delete({ id });
 
         if (result.affected === 0) {
@@ -58,7 +58,7 @@ export class ProductsService {
         return result;
     }
 
-    async updateProduct(id: number, product: ProductDto) {
+    async updateProduct(id: string, product: ProductDto) {
         const productFound = await this.productRespository.findOne({
             where: {
                 id

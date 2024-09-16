@@ -1,13 +1,13 @@
-import { IsNotEmpty, IsNumber} from "class-validator";
+import { IsNotEmpty, IsNumber, IsUUID} from "class-validator";
 
 export class RequestDto {
     @IsNumber()
     @IsNotEmpty()
     quantity: number;
 
-    @IsNumber()
+    @IsUUID()
     @IsNotEmpty()
-    productId: number;
+    productId: string;
 
     @IsNumber()
     @IsNotEmpty()

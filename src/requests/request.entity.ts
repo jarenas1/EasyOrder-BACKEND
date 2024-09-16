@@ -4,11 +4,11 @@ import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGenerat
 
 @Entity()
 export class Request {
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @Column()
-    productId: number;
+    productId: string;
 
     @Column()
     quantity: number;
@@ -26,7 +26,7 @@ export class Request {
     @JoinColumn({ name: 'productId' })
     product: Product;
 
-    @ManyToOne(() => Session, session => session.requests)
-    @JoinColumn({ name: 'sessionId' })
-    session: Session;
+    // @ManyToOne(() => Session, session => session.requests)
+    // @JoinColumn({ name: 'sessionId' })
+    // session: Session;
 }
