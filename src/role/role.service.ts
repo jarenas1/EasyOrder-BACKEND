@@ -31,7 +31,7 @@ export class RoleService {
   }
 
   async findAll() {
-    return await this.roleRepository.find()
+    return await this.roleRepository.find({relations: {users:true}})
   }
 
   delete(id: string) {
