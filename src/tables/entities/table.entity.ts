@@ -1,0 +1,21 @@
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm"
+
+@Entity('Tables')
+export class Table {
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
+
+    @Column({type: 'varchar', length: 20})
+    name: string;
+
+    @Column({type: 'varchar', length: 50})
+    status: string;
+
+    @ManyToOne(() => User, (user) => user.tables)
+    @JoinColumn({ name: 'users_id' })
+    user: User;
+
+    @OneToMany(() => Session, (session) => session.table)
+    session: Session[];
+}
+

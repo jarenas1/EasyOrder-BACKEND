@@ -30,7 +30,7 @@ export class UserService {
       throw new BadRequestException(err.message)
     }
   }
-
+  
   findAll() {
     return this.userRepository.find({relations: {
       tables: true,
