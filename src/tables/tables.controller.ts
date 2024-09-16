@@ -9,7 +9,7 @@ import { RolesEnum } from 'src/common/enums';
 
 @Controller('tables')
 export class TableController {
-  constructor(private readonly tableService: TableService) {}
+  constructor(private readonly tableService: TableService) { }
 
   @RoleDecorator(RolesEnum.admin)
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -47,4 +47,5 @@ export class TableController {
   @Delete(':tableId')
   deleteTable(@Param('tableId') tableId: string) {
     return this.tableService.deleteTable(tableId);
+  }
 }

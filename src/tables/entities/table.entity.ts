@@ -1,4 +1,7 @@
+import { Session } from "src/sessions/entities/session.entity";
+import { User } from "src/user/entities/user.entity";
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm"
+
 
 @Entity('Tables')
 export class Table {
