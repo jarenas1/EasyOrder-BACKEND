@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Injectable, NotFoundException, InternalServerErrorException, UseGuards } from '@nestjs/common';
+import { Injectable, NotFoundException, InternalServerErrorException, UseGuards, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Session } from './entities/session.entity';
@@ -21,16 +21,16 @@ export class SessionsService {
   ) {}
 
   @RoleDecorator(RolesEnum.mesero)
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  // @UseGuards(JwtAuthGuard, RolesGuard)
   async create(createSessionDto: CreateSessionDto): Promise<Session> {
     try {
       // Buscar la tabla relacionada por ID
       const table = await this.tablesRepository.findOne({
-        where: { id: createSessionDto.tableId },
+        where: { id: createSessionDto.table_id },
       });
 
       if (!table) {
-        throw new NotFoundException(`Table with ID ${createSessionDto.tableId} not found`);
+        throw new NotFoundException(`Table with ID ${createSessionDto.table_id} not found`);
       }
 
       const session = this.sessionsRepository.create({
@@ -93,4 +93,19 @@ export class SessionsService {
       throw new InternalServerErrorException(`Failed to update session ${id}`, error.message);
     }
   }
+
+  //To Do
+  async getSessionById(id) {
+    const sessionFound = await this.sessionsRepository.findOne({
+        where: {
+            id
+        },
+        relations: ['request']//le incluimos la relación de la entidad de request
+    });
+
+    if (!sessionFound) {
+        return new HttpException(`Solicitud no encontrada: ${id}`, HttpStatus.NOT_FOUND);
+    }
+    return sessionFound;
+}
 }

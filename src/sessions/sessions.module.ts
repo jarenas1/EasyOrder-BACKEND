@@ -10,5 +10,6 @@ import { Table } from '../tables/entities/table.entity';
   imports: [TypeOrmModule.forFeature([Session, Table])],
   controllers: [SessionsController],
   providers: [SessionsService],
+  exports: [SessionsService]
 })
 export class SessionsModule {}

@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
-import { Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 import { Table } from '../../tables/entities/table.entity';
+import { Request } from 'src/requests/request.entity';
 
 @Entity('sessions')
 export class Session {
@@ -14,5 +15,9 @@ export class Session {
     paid: boolean;
 
     @ManyToOne(() => Table, (table) => table.session)
+    @JoinColumn({ name: 'table_id' })
     table: Table;
+
+    @OneToMany(() => Request, request => request.session)
+    requests: Request;
 }

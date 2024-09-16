@@ -12,5 +12,5 @@ export class CreateSessionDto {
     name: string;
 
     @IsNotEmpty()
-    tableId: string;
+    table_id: string;
 }
