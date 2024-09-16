@@ -12,8 +12,6 @@ export class Table {
     @Column("text")
     status:string
 
-
     @ManyToOne(()=> User, user => user.tables, { nullable: true})
     user: User
-
 }

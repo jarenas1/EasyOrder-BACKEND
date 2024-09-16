@@ -7,6 +7,8 @@ import { SeedModule } from './seed/seed.module';
 import { RoleModule } from './role/role.module';
 import { TableModule } from './table/table.module';
 import { AuthModule } from './auth/auth.module';
+import { RequestsModule } from './requests/requests.module';
+import { ProductsModule } from './products/products.module';
 
 
 
@@ -34,6 +36,8 @@ import { AuthModule } from './auth/auth.module';
   SeedModule,
   RoleModule,
   TableModule,
-  AuthModule]
+  AuthModule,
+  RequestsModule,
+  ProductsModule]
 })
 export class AppModule {}
