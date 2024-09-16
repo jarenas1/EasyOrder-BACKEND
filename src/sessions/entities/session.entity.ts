@@ -18,6 +18,6 @@ export class Session {
     @JoinColumn({ name: 'table_id' })
     table: Table;
 
-    // @OneToMany(() => Request, request => request.session)
-    // requests: Request;
+    @OneToMany(() => Request, request => request.session)
+    requests: Request;
 }

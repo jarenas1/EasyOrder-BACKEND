@@ -14,7 +14,7 @@ export class Request {
     quantity: number;
 
     @Column()
-    sessionsId: number;
+    sessionsId: string;
 
     @Column({ default: 'Recibido'})//Se le pone ese estado por defecto
     status: string;
@@ -26,7 +26,7 @@ export class Request {
     @JoinColumn({ name: 'productId' })
     product: Product;
 
-    // @ManyToOne(() => Session, session => session.requests)
-    // @JoinColumn({ name: 'sessionId' })
-    // session: Session;
+    @ManyToOne(() => Session, session => session.requests)
+    @JoinColumn({ name: 'sessionId' })
+    session: Session;
 }

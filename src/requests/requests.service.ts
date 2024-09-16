@@ -14,24 +14,24 @@ export class RequestsService {
         @InjectRepository(Request) private requestRepository: Repository<Request>,
         private requestGateway: RequestsGateway,
         private productService: ProductsService,
-        //private sessionService: SessionsService,
+        private sessionService: SessionsService,
     ) { }
 
     async createRequest(request: RequestDto) {
         //Aquí debo buscar las FK para poder crear la solicitud
         const productFound = await this.productService.getProductById(request.productId);
-        //const sessionFound = await this.sessionService.getSessionById(request.sessionsId);
+        const sessionFound = await this.sessionService.getSessionById(request.sessionsId);
 
         if (!productFound) {
             return new HttpException('Producto no encontrado', HttpStatus.NOT_FOUND);
-        } //else if (!sessionFound) {
-            //return new HttpException('Sesión no encontrada', HttpStatus.NOT_FOUND);
-        //}
+        } else if (!sessionFound) {
+            return new HttpException('Sesión no encontrada', HttpStatus.NOT_FOUND);
+        }
         const newRequest = this.requestRepository.create(
             {
                 ...request,
                 product: productFound,// es esta relación product: Product que esta en el request.entity.ts
-                // session: sessionFound, // es esta relación session: Session que esta en el request.entity.ts
+                session: sessionFound, // es esta relación session: Session que esta en el request.entity.ts
                 status: 'Recibido', //Este me lo tira por defecto
             }
         );

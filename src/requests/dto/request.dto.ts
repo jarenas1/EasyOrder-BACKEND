@@ -9,9 +9,9 @@ export class RequestDto {
     @IsNotEmpty()
     productId: string;
 
-    @IsNumber()
+    @IsUUID()
     @IsNotEmpty()
-    sessionsId: number;
+    sessionsId: string;
 
     status?: string;
 }
