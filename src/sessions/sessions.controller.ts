@@ -10,31 +10,30 @@ import { CreateSessionDto } from './dto/create-session.dto';
 
 @Controller('sessions')
 export class SessionsController {
-    constructor(private readonly sessionsService: SessionsService) {}
+  constructor(private readonly sessionsService: SessionsService) {}
 
-    @Post()
-    create (session: CreateSessionDto) {
-      return this.sessionsService.create(session);
-    }
+  @Post()
+  create(@Body() session: CreateSessionDto) {
+    return this.sessionsService.create(session);
+  }
 
+  @RoleDecorator(RolesEnum.mesero)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Get()
+  findAll() {
+    return this.sessionsService.findAll();
+  }
 
-    @RoleDecorator(RolesEnum.mesero)
-    @UseGuards(JwtAuthGuard, RolesGuard)
-    @Get()
-    findAll() {
-      return this.sessionsService.findAll();
-    }
+  @Get('unpaid')
+  findUnpaid() {
+    return this.sessionsService.findUnpaid();
+  }
 
-    @Get('unpaid')
-    findUnpaid() {
-      return this.sessionsService.findUnpaid();
-    }
-
-    @Patch(':id/paid')
-    updatePaid(
-      @Param('id') id: string,
-      @Body() updateSessionDto: UpdateSessionDto,
-    ) {
-      return this.sessionsService.updatePaid(id, updateSessionDto.paid);
-    }
+  @Patch(':id/paid')
+  updatePaid(
+    @Param('id') id: string,
+    @Body() updateSessionDto: UpdateSessionDto,
+  ) {
+    return this.sessionsService.updatePaid(id, updateSessionDto.paid);
+  }
 }
