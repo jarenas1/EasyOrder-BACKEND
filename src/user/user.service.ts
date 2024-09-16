@@ -7,10 +7,16 @@ import { Repository, Table } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { error } from 'console';
 import { Role } from 'src/role/entities/role.entity';
+import { RoleService } from 'src/role/role.service';
+import { RolesEnum } from 'src/common/enums';
+
 
 @Injectable()
 export class UserService {
-  constructor(@InjectRepository(User) private readonly userRepository: Repository<User> ) {}
+  constructor(
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    private readonly roleService: RoleService
+ ) {}
 
   async create(createUserDto: CreateUserDto) {
 
@@ -21,8 +27,21 @@ export class UserService {
         throw new Error('Username already exists')
       }
 
+      const users = await this.findAll()
+      for(let i=0; i< users.length; i++) {
+        let match = await bcrypt.compare(createUserDto.password, users[i].password)
+        if (match) {
+          throw new Error("password already exists")
+        }
+      }
+
+      const role = await this.roleService.findOneSeed(RolesEnum.mesero)
       let password = await bcrypt.hash(createUserDto.password, 10)
       createUserDto = { ...createUserDto, password}
+
+      if(!createUserDto.role) {
+        createUserDto = { ...createUserDto, password, role: role}
+      }
       const newUser = this.userRepository.create(createUserDto)
       return await this.userRepository.save( newUser)
 
@@ -30,12 +49,16 @@ export class UserService {
       throw new BadRequestException(err.message)
     }
   }
-
+  
   findAll() {
-    return this.userRepository.find({relations: {
-      tables: true,
-      role: true
-    }})
+    try {
+      return this.userRepository.find({relations: {
+        tables: true,
+        role: true
+      }})
+    } catch (error) {
+      throw new NotFoundException()
+    }
   }
 
   async findByUsername(username:string) {
@@ -47,13 +70,9 @@ export class UserService {
   }
 
   async findOne(id: string) {
-    const found = await this.userRepository.findOneBy({id})
-
-    if (!found) {
-      throw new NotFoundException("User not found aqui")
-    }
-
-    return found
+      const found = await this.userRepository.findOneBy({id})
+      if (!found) {throw new NotFoundException("User not found")}
+      return found
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
@@ -71,7 +90,11 @@ export class UserService {
   }
 
   async remove(id: string) {
-    await this.userRepository.delete(id)
-    return {message: "Deleted Successful"}
+    try {
+      await this.userRepository.delete(id)
+      return {message: "Deleted Successfully"}
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
   }
 }
