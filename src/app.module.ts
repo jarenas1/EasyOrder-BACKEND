@@ -38,6 +38,7 @@ import { TablesModule } from './tables/tables.module';
   SeedModule,
   RoleModule,
   AuthModule,
+  SessionsModule,
   TablesModule,
   RequestsModule,
   ProductsModule]
