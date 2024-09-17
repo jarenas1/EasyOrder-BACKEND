@@ -9,9 +9,6 @@ import { RoleModule } from './role/role.module';
 import { AuthModule } from './auth/auth.module';
 import { RequestsModule } from './requests/requests.module';
 import { ProductsModule } from './products/products.module';
-
-
-
 import { SessionsModule } from './sessions/sessions.module';
 import { TablesModule } from './tables/tables.module';
 @Module({
