@@ -1,3 +1,4 @@
+import { ApiOperation } from "@nestjs/swagger";
 import { IsNotEmpty, IsNumber, IsUUID} from "class-validator";
 
 export class RequestDto {
