@@ -16,20 +16,29 @@ import { TablesModule } from './tables/tables.module';
     load: [configurations],
     isGlobal: true
   }),
-  TypeOrmModule.forRootAsync({
-    imports: [ConfigModule],
-    inject: [ConfigService],
-    useFactory: (configService: ConfigService) => ({
-      type: 'postgres',
-      host: configService.get('database.host'),
-      port: configService.get('database.port'),
-      username: configService.get('database.user'),
-      password: configService.get('database.password'),
-      database: configService.get('database.database'),
-      autoLoadEntities: true,
-      synchronize: false,
-    }),
-
+  // TypeOrmModule.forRootAsync({
+  //   imports: [ConfigModule],
+  //   inject: [ConfigService],
+  //   useFactory: (configService: ConfigService) => ({
+  //     type: 'postgres',
+  //     host: configService.get('database.host'),
+  //     port: configService.get('database.port'),
+  //     username: configService.get('database.user'),
+  //     password: configService.get('database.password'),
+  //     database: configService.get('database.database'),
+  //     autoLoadEntities: true,
+  //     synchronize: false,
+  //   }),
+  // }),
+  TypeOrmModule.forRoot({
+    type: 'postgres',
+    host: process.env.POSTGRES_HOST,
+    port: +process.env.POSTGRES_PORT | 5430,
+    username: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD,
+    database: process.env.POSTGRES_DB,
+    autoLoadEntities: true,
+    synchronize: false,
   }),
   UserModule,
   SeedModule,
