@@ -26,6 +26,6 @@ export class RoleController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Delete(':id')
   remove(@Param('id', ParseUUIDPipe) id: string) {
-    return this.roleService.delete(id);
+    return this.roleService.delete(id)
   }
 }

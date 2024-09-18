@@ -19,6 +19,7 @@ export class SeedService {
       }
       return result
     } catch (error) {
+      console.log(error.message)
       throw new ForbiddenException({message: error.message})
     }
   }
