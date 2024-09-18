@@ -22,6 +22,8 @@ export class AuthService {
     try {
       const {password, ...user} = await this.userService.findByUsername(loginUser.username);
       const match = await bcrypt.compare(loginUser.password,password)
+      console.log(user);
+
       if (!user && !password && !match) {
         throw new Error("User with that credentials is unauthorized");
       }
@@ -37,7 +39,7 @@ export class AuthService {
       const {id, ...userAuthorized} = await this.validateUser(loginUser)
       if (userAuthorized) {
         let ACCESS_TOKEN = await this.jwtService.signAsync({sub: id, user: userAuthorized}, {secret: this.configService.get("SECRET")})
-        return { ACCESS_TOKEN }
+        return { ACCESS_TOKEN, user: userAuthorized }
       }
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.UNAUTHORIZED)
