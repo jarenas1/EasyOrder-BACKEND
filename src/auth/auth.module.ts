@@ -12,7 +12,7 @@ import { RoleModule } from 'src/role/role.module';
   imports: [UserModule, RoleModule, JwtModule.register({
     global: true,
     secret: process.env.SECRET,
-    signOptions: { expiresIn: "10m"}
+    signOptions: { expiresIn: "10h"}
   })],
   exports: [AuthService]
 })
