@@ -20,11 +20,17 @@ export class AuthService {
 
   async validateUser(loginUser: LoginDto) {
     try {
-      const {password, ...user} = await this.userService.findByUsername(loginUser.username);
-      const match = await bcrypt.compare(loginUser.password,password)
-      console.log(user);
+      const userfound = await this.userService.findByUsername(loginUser.username);
 
-      if (!user && !password && !match) {
+      if(!userfound) {
+        throw new Error("User not found");
+      }
+
+      const {password, ...user} = userfound
+
+      const match = await bcrypt.compare(loginUser.password,password)
+
+      if (!match) {
         throw new Error("User with that credentials is unauthorized");
       }
       return user
