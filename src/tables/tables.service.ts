@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { Table } from './entities/table.entity';
 import { CreateTableDto } from './dto/create-table.dto';
 import { TableGateway } from './websocket.gateway';
+import { User } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class TableService {
@@ -16,7 +17,7 @@ export class TableService {
 
   async getAllTables(): Promise<Table[]> {
     try {
-      return await this.tableRepository.find();
+      return await this.tableRepository.find({relations: {user:true}});
     } catch (error) {
       throw new InternalServerErrorException('Error retrieving tables:', error);
     }
