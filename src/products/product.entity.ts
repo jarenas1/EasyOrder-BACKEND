@@ -12,6 +12,9 @@ export class Product {
     @Column()
     price: number;
 
+    @Column()
+    url: string;
+
     @OneToMany(() => Request, request => request.product)
     requests: Request;
 }
