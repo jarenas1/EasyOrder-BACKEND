@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Patch, Body, Post, UseGuards, Delete } from '@nestjs/common';
 import { TableService } from './tables.service';
 import { CreateTableDto } from './dto/create-table.dto';
-import { UpdateTableStatusDto } from './dto/update-table.dto';
+import { UpdateTableStatusDto, UpdateTableNameDto } from './dto/update-table.dto';
 import { RoleDecorator } from '../common/decorators/role.decorator';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guard/role.guard';
@@ -44,6 +44,19 @@ export class TableController {
     @Body() updateTableStatusDto: UpdateTableStatusDto,
   ) {
     return this.tableService.updateTableStatus(tableId, updateTableStatusDto.status);
+  }
+
+  @ApiOperation({ summary: 'Actualizar el nombre de una mesa' })
+  @ApiResponse({ status: 200, description: 'El nombre de la mesa ha sido actualizado.' })
+  @ApiResponse({ status: 404, description: 'Mesa no encontrada.' })
+  @RoleDecorator(RolesEnum.mesero)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Patch(':tableId/name')
+  updateTableName(
+    @Param('tableId') tableId: string,
+    @Body() UpdateTableNameDto: UpdateTableNameDto,
+  ) {
+    return this.tableService.updateTableName(tableId, UpdateTableNameDto.name);
   }
 
   @ApiOperation({ summary: 'Crear una nueva mesa' })

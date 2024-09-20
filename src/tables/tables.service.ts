@@ -62,6 +62,27 @@ export class TableService {
     }
   }
 
+  async updateTableName(tableId: string, name: string): Promise<Table> {
+    if (!name) {
+      throw new BadRequestException('name cannot be empty');
+    }
+
+    try {
+      const table = await this.tableRepository.findOneBy({ id: tableId });
+      if (!table) {
+        throw new NotFoundException(`Table with id ${tableId} not found`);
+      }
+
+      table.name = name;
+      await this.tableRepository.save(table);
+
+
+      return table;
+    } catch (error) {
+      throw new InternalServerErrorException('Error updating table name:', error);
+    }
+  }
+
   async createTable(createTableDto: CreateTableDto): Promise<Table> {
     if (!createTableDto.name || !createTableDto.status) {
       throw new BadRequestException('Table name and status are required');

@@ -6,3 +6,9 @@ export class UpdateTableStatusDto {
   @IsString()
   status: string;
 }
+
+export class UpdateTableNameDto {
+  @ApiProperty({ description: 'El nuevo nombre de la mesa'})
+  @IsString()
+  name: string;
+}
