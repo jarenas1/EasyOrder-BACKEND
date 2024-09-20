@@ -49,7 +49,7 @@ export class SessionsService {
   @UseGuards(JwtAuthGuard, RolesGuard)
   async findAll(): Promise<Session[]> {
     try {
-      return await this.sessionsRepository.find({relations: {requests:true}});
+      return await this.sessionsRepository.find({relations: {table: true, requests:true}});
     } catch (error) {
       throw new InternalServerErrorException('Failed to retrieve sessions', error.message);
     }
