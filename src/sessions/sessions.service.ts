@@ -34,8 +34,8 @@ export class SessionsService {
 
       const session = this.sessionsRepository.create({
         name: createSessionDto.name,
-        paid: false, 
-        table: table, 
+        paid: false,
+        table: table,
       });
 
       return await this.sessionsRepository.save(session);
@@ -49,7 +49,7 @@ export class SessionsService {
   @UseGuards(JwtAuthGuard, RolesGuard)
   async findAll(): Promise<Session[]> {
     try {
-      return await this.sessionsRepository.find();
+      return await this.sessionsRepository.find({relations: {requests:true}});
     } catch (error) {
       throw new InternalServerErrorException('Failed to retrieve sessions', error.message);
     }
