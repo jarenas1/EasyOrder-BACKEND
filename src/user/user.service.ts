@@ -5,7 +5,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository, Table } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { error } from 'console';
 import { Role } from 'src/role/entities/role.entity';
 import { RoleService } from 'src/role/role.service';
 import { RolesEnum } from 'src/common/enums';
@@ -24,16 +23,16 @@ export class UserService {
       const existing= await this.findByUsername(createUserDto.username)
 
       if (existing) {
-        throw new Error('Username already exists')
+        throw new Error('Credentials already exists')
       }
 
-      const users = await this.findAll()
-      for(let i=0; i< users.length; i++) {
-        let match = await bcrypt.compare(createUserDto.password, users[i].password)
-        if (match) {
-          throw new Error("password already exists")
-        }
-      }
+      // const users = await this.findAll()
+      // for(let i=0; i< users.length; i++) {
+      //   let match = await bcrypt.compare(createUserDto.password, users[i].password)
+      //   if (match) {
+      //     throw new Error("password already exists")
+      //   }
+      // }
 
       const role = await this.roleService.findOneSeed(RolesEnum.mesero)
       let password = await bcrypt.hash(createUserDto.password, 10)
@@ -49,7 +48,7 @@ export class UserService {
       throw new BadRequestException(err.message)
     }
   }
-  
+
   findAll() {
     try {
       return this.userRepository.find({relations: {

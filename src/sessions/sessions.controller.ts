@@ -25,7 +25,7 @@ export class SessionsController {
 
   @ApiOperation({ summary: 'Obtener todas las sesiones' })
   @ApiResponse({ status: 200, description: 'Lista de todas las sesiones.' })
-  @RoleDecorator(RolesEnum.mesero)
+  @RoleDecorator(RolesEnum.mesero, RolesEnum.admin)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Get()
   findAll() {
