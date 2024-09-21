@@ -14,7 +14,7 @@ export class RequestsService {
         @InjectRepository(Request) private requestRepository: Repository<Request>,
         private requestGateway: RequestsGateway,
         private productService: ProductsService,
-        private sessionService: SessionsService,
+        private sessionService: SessionsService
     ) { }
 
     async createRequest(request: RequestDto) {
@@ -43,6 +43,40 @@ export class RequestsService {
         return newRequest;
     }
 
+    //Método modificado para aceptar un array de RequestDto
+    async createRequests(requests: RequestDto[]) {
+        const createdRequests = [];
+
+        for (const request of requests) {
+            // Buscar las FK de product y session
+            const productFound = await this.productService.getProductById(request.productId);
+            const sessionFound = await this.sessionService.getSessionById(request.sessionId);
+
+            if (!productFound) {
+                throw new HttpException('Producto no encontrado', HttpStatus.NOT_FOUND);
+            } else if (!sessionFound) {
+                throw new HttpException('Sesión no encontrada', HttpStatus.NOT_FOUND);
+            }
+
+            const newRequest = this.requestRepository.create({
+                quantity: request.quantity,
+                product: productFound, // Relación con la entidad Product
+                session: sessionFound, // Relación con la entidad Session
+                status: 'Recibido',
+            });
+
+            // Guardar cada solicitud en la base de datos
+            await this.requestRepository.save(newRequest);
+            createdRequests.push(newRequest);
+
+            // Enviar la solicitud a los meseros mediante WebSocket
+            this.requestGateway.sendRequest(newRequest);
+        }
+
+        return createdRequests;
+    }
+
+
     getRequests() {
         return this.requestRepository.find({
             relations: ['product']//Así se llama en la entidad y es para que nos traiga la información
@@ -67,7 +101,7 @@ export class RequestsService {
         }
 
         //Aquí actualizamos el estado { status }
-        requestFound.status = status; 
+        requestFound.status = status;
 
         const updatedRequest = await this.requestRepository.save(requestFound);
         this.requestGateway.notifyRequestStatusChange(updatedRequest)

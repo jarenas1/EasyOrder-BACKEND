@@ -42,7 +42,7 @@ export class ProductsController {
     }
 
     @Patch(':id')
-    @ApiOperation({summary: 'Delete product by id'})//swagger
+    @ApiOperation({summary: 'Update product by id'})//swagger
     @ApiResponse({status: 200, description: 'Product deleted successfully'})
     @ApiResponse({status: 404, description: 'Product has not been found'})
     updateProduct(@Param('id', ParseUUIDPipe) id: string, @Body() updatedProduct: ProductDto) {
