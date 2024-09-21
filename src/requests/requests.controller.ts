@@ -10,47 +10,48 @@ import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 @Controller('requests')
 export class RequestsController {
 
-    constructor(private readonly  requestService: RequestsService) {}
+    constructor(private readonly requestService: RequestsService) { }
 
     @Post()
-    @ApiOperation({summary: 'Create a new request'})//swagger
-    @ApiResponse({status: 200, description: 'New request has been created'})
-    @ApiResponse({status: 404, description: 'Product or Session has not been found'})
+    @ApiOperation({ summary: 'Create a new request' })//swagger
+    @ApiResponse({ status: 200, description: 'New request has been created' })
+    @ApiResponse({ status: 404, description: 'Product or Session has not been found' })
     async createRequest(@Body() request: RequestDto) {
         return this.requestService.createRequest(request);
     }
 
     //Método modificado para aceptar un array de RequestDto
     @Post('/many')
-    @ApiBody({type: [RequestDto], description: 'Requests'})
-    @ApiOperation({summary: 'Create a new requests'})//swagger
-    @ApiResponse({status: 200, description: 'New requests has been created'})
-    @ApiResponse({status: 404, description: 'Product or Session has not been found'})
+    @ApiBody({ type: [RequestDto], description: 'Requests' })
+    @ApiOperation({ summary: 'Create a new requests' })//swagger
+    @ApiResponse({ status: 200, description: 'New requests has been created' })
+    @ApiResponse({ status: 404, description: 'Product or Session has not been found' })
     async createRequests(@Body() request: RequestDto[]) {
         return this.requestService.createRequests(request);
     }
 
     @Get()
-    @ApiOperation({summary: 'Get all request'})
-    @ApiResponse({status: 200, description: 'All requests'})
+    @ApiOperation({ summary: 'Get all request' })
+    @ApiResponse({ status: 200, description: 'All requests' })
     getRequests(): Promise<Request[]> {
         return this.requestService.getRequests();
     }
 
     @Get(':id')
-    @ApiOperation({summary: 'Get a request by id'})
-    @ApiResponse({status: 200, description: 'Request found'})
-    @ApiResponse({status: 404, description: 'Request had not been found'})
+    @ApiOperation({ summary: 'Get a request by id' })
+    @ApiResponse({ status: 200, description: 'Request found' })
+    @ApiResponse({ status: 404, description: 'Request had not been found' })
     getRequestById(@Param('id', ParseUUIDPipe) id: string) {
         return this.requestService.getRequestById(id);
     }
 
     //Endpoint para que los meseros actualicen el estado
     @Patch(':id/status')
-    @ApiOperation({summary: 'Update request status'})
-    @ApiResponse({status: 200, description: 'status has been updated'})
-    @ApiResponse({status: 404, description: 'Request had not been found'})
+    @ApiOperation({ summary: 'Update request status' })
+    @ApiResponse({ status: 200, description: 'status has been updated' })
+    @ApiResponse({ status: 404, description: 'Request had not been found' })
     async updateRequestStatus(@Param('id') id: string, @Body() updateRequestDto: RequestUpdateDto) {
         return this.requestService.updateRequestStatus(id, updateRequestDto);
     }
+    
 }

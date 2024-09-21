@@ -19,7 +19,17 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Easy Order')
-    .setDescription('The Easy Order API description')
+    .setDescription(`
+    Esta API usa WebSockets para las notificaciones en tiempo real sobre el estado de las solicitudes. 
+    Para conectarse al WebSocket, use el siguiente esquema:
+
+    - URL de WebSocket: ws://{HOST}:{PORT}
+    - Eventos disponibles:
+      - client-joined: Notifica cuando un nuevo cliente se conecta.
+      - client-disconnected: Notifica cuando un cliente se desconecta.
+      - new-request: Notifica cuando se crea una nueva solicitud.
+      - request-status-change: Notifica cuando cambia el estado de una solicitud.
+  `)
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
