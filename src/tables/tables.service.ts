@@ -1,4 +1,3 @@
-// src/tables/tables.service.ts
 import { Injectable, NotFoundException, BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -81,6 +80,26 @@ export class TableService {
       return table;
     } catch (error) {
       throw new InternalServerErrorException('Error updating table name:', error);
+    }
+  }
+
+  async updateTableUser(tableId: string, user: User): Promise<Table> {
+    if (!user) {
+      throw new BadRequestException('User cannot be empty');
+    }
+  
+    try {
+      const table = await this.tableRepository.findOneBy({ id: tableId });
+      if (!table) {
+        throw new NotFoundException(`Table with id ${tableId} not found`);
+      }
+  
+      table.user = user;
+      await this.tableRepository.save(table);
+  
+      return table;
+    } catch (error) {
+      throw new InternalServerErrorException('Error updating table user:', error);
     }
   }
 
