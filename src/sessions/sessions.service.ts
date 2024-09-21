@@ -55,7 +55,6 @@ export class SessionsService {
     }
   }
 
-
   @RoleDecorator(RolesEnum.mesero)
   @UseGuards(JwtAuthGuard, RolesGuard)
   async findUnpaid(): Promise<Session[]> {
@@ -73,7 +72,7 @@ export class SessionsService {
     }
   }
 
-  @RoleDecorator(RolesEnum.mesero)
+  @RoleDecorator(RolesEnum.mesero, RolesEnum.admin)
   @UseGuards(JwtAuthGuard, RolesGuard)
   async updatePaid(id: string, paid: boolean): Promise<Session> {
     try {
