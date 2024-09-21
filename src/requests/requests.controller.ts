@@ -3,7 +3,7 @@ import { RequestsService } from './requests.service';
 import { RequestDto } from './dto/request.dto';
 import { Request } from './request.entity';
 import { RequestUpdateDto } from './dto/request-update.dto';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 
 @ApiTags('requests')
@@ -15,9 +15,19 @@ export class RequestsController {
     @Post()
     @ApiOperation({summary: 'Create a new request'})//swagger
     @ApiResponse({status: 200, description: 'New request has been created'})
-    @ApiResponse({status: 404, description: 'Product or Session had not been found'})
+    @ApiResponse({status: 404, description: 'Product or Session has not been found'})
     async createRequest(@Body() request: RequestDto) {
         return this.requestService.createRequest(request);
+    }
+
+    //Método modificado para aceptar un array de RequestDto
+    @Post('/many')
+    @ApiBody({type: [RequestDto], description: 'Requests'})
+    @ApiOperation({summary: 'Create a new requests'})//swagger
+    @ApiResponse({status: 200, description: 'New requests has been created'})
+    @ApiResponse({status: 404, description: 'Product or Session has not been found'})
+    async createRequests(@Body() request: RequestDto[]) {
+        return this.requestService.createRequests(request);
     }
 
     @Get()
