@@ -18,3 +18,12 @@ export class UpdateTableUserDto {
   @ApiProperty({ description: 'El nuevo usuario asignado a la mesa' })
   user: User;
 }
+
+export class UpdateTableNameAndUserDto {
+  @ApiProperty({ description: 'El nuevo nombre de la mesa' })
+  @IsString()
+  name: string;
+
+  @ApiProperty({ description: 'El nuevo usuario asignado a la mesa' })
+  user: User;
+}

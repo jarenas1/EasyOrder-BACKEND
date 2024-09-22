@@ -5,6 +5,7 @@ import { Table } from './entities/table.entity';
 import { CreateTableDto } from './dto/create-table.dto';
 import { TableGateway } from './websocket.gateway';
 import { User } from 'src/user/entities/user.entity';
+import { UpdateTableNameAndUserDto } from './dto/update-table.dto';
 
 @Injectable()
 export class TableService {
@@ -124,6 +125,26 @@ export class TableService {
       }
     } catch (error) {
       throw new InternalServerErrorException('Error deleting table:', error);
+    }
+  }
+
+  async updateTableNameAndUser(tableId: string, updateTableNameAndUserDto: UpdateTableNameAndUserDto): Promise<Table> {
+    const { name, user } = updateTableNameAndUserDto;
+  
+    try {
+      const table = await this.tableRepository.findOne({ where: { id: tableId }, relations: ['user'] });
+  
+      if (!table) {
+        throw new NotFoundException(`Table with id ${tableId} not found`);
+      }
+  
+      table.name = name;
+      table.user = user;
+      await this.tableRepository.save(table);
+  
+      return table;
+    } catch (error) {
+      throw new InternalServerErrorException('Error updating table:', error);
     }
   }
 }

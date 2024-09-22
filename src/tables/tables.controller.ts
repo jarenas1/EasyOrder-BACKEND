@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Patch, Body, Post, UseGuards, Delete } from '@nestjs/common';
 import { TableService } from './tables.service';
 import { CreateTableDto } from './dto/create-table.dto';
-import { UpdateTableStatusDto, UpdateTableNameDto, UpdateTableUserDto } from './dto/update-table.dto';
+import { UpdateTableStatusDto, UpdateTableNameDto, UpdateTableUserDto, UpdateTableNameAndUserDto } from './dto/update-table.dto';
 import { RoleDecorator } from '../common/decorators/role.decorator';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guard/role.guard';
@@ -91,5 +91,18 @@ export class TableController {
   @Delete(':tableId')
   deleteTable(@Param('tableId') tableId: string) {
     return this.tableService.deleteTable(tableId);
+  }
+
+  @ApiOperation({ summary: 'Actualizar el nombre de la mesa y el usuario asignado simultáneamente' })
+  @ApiResponse({ status: 200, description: 'El nombre y el usuario de la mesa han sido actualizados.' })
+  @ApiResponse({ status: 404, description: 'Mesa no encontrada.' })
+  @RoleDecorator(RolesEnum.admin)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Patch(':tableId/name-user')
+  updateTableNameAndUser(
+    @Param('tableId') tableId: string,
+    @Body() updateTableNameAndUserDto: UpdateTableNameAndUserDto,
+  ) {
+    return this.tableService.updateTableNameAndUser(tableId, updateTableNameAndUserDto);
   }
 }
