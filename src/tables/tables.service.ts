@@ -129,22 +129,22 @@ export class TableService {
   }
 
   async updateTableNameAndUser(tableId: string, updateTableNameAndUserDto: UpdateTableNameAndUserDto): Promise<Table> {
-    const { name, user } = updateTableNameAndUserDto;
-  
-    try {
-      const table = await this.tableRepository.findOne({ where: { id: tableId }, relations: ['user'] });
-  
-      if (!table) {
-        throw new NotFoundException(`Table with id ${tableId} not found`);
-      }
-  
-      table.name = name;
-      table.user = user;
-      await this.tableRepository.save(table);
-  
-      return table;
-    } catch (error) {
-      throw new InternalServerErrorException('Error updating table:', error);
+  const { name, user } = updateTableNameAndUserDto;
+
+  try {
+    const table = await this.tableRepository.findOne({ where: { id: tableId }, relations: ['user'] });
+
+    if (!table) {
+      throw new NotFoundException(`Table with id ${tableId} not found`);
     }
+
+    table.name = name;
+    table.user = user;
+    await this.tableRepository.save(table);
+
+    return table;
+  } catch (error) {
+    throw new InternalServerErrorException('Error updating table:', error);
   }
+}
 }

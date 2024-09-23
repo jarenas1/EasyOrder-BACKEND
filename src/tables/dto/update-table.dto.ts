@@ -24,6 +24,7 @@ export class UpdateTableNameAndUserDto {
   @IsString()
   name: string;
 
-  @ApiProperty({ description: 'El nuevo usuario asignado a la mesa' })
+  @ApiProperty({ description: 'El id del nuevo usuario asignado a la mesa', example: 'uuid' })
+  @IsString()
   user: User;
 }
