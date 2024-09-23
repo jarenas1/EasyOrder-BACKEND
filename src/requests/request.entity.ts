@@ -26,7 +26,7 @@ export class Request {
     @JoinColumn({ name: 'productId' })
     product: Product;
 
-    @ManyToOne(() => Session, session => session.requests)
+    @ManyToOne(() => Session, session => session.requests, {onDelete: "CASCADE"})
     @JoinColumn({ name: 'sessionId' })
     session: Session;
 }

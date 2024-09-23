@@ -6,7 +6,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('sessions')
 export class Session {
-    
+
     @ApiProperty({ description: 'ID único de la sesión', example: 'uuid' })
     @PrimaryGeneratedColumn('uuid')
     id: string;
@@ -25,6 +25,6 @@ export class Session {
     table: Table;
 
     @ApiProperty({ description: 'Solicitudes asociadas a la sesión' })
-    @OneToMany(() => Request, request => request.session)
+    @OneToMany(() => Request, request => request.session, {onDelete: "CASCADE"})
     requests: Request[];
 }
