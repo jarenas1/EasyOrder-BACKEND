@@ -16,7 +16,7 @@ export class TableController {
 
   @ApiOperation({ summary: 'Obtener todas las mesas' })
   @ApiResponse({ status: 200, description: 'Lista de todas las mesas.' })
-  @RoleDecorator(RolesEnum.admin)
+  @RoleDecorator(RolesEnum.admin, RolesEnum.mesero)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Get()
   getAllTables() {
