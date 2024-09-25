@@ -31,6 +31,11 @@ Nightclub management solution through an innovative SaaS platform, offering real
 
 ---
 
+## Github Repository
+[GitHub](https://github.com/jarenas1/EasyOrder-BACKEND)
+
+---
+
 ## Front-End Architecture
 
 ### Overview
@@ -44,9 +49,6 @@ The front-end of EasyOrder is designed to provide an intuitive and responsive us
 - **API Interaction**: Fetch for making HTTP requests to the backend
 - **Build Tool**: Vite for fast development and build processes
 
-### Folder Structure
-
-  ![Structure](https://private-user-images.githubusercontent.com/120411525/370538893-954ed950-84d5-49aa-9376-3eb7ed49f55d.jpg?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MjcyMzM5ODcsIm5iZiI6MTcyNzIzMzY4NywicGF0aCI6Ii8xMjA0MTE1MjUvMzcwNTM4ODkzLTk1NGVkOTUwLTg0ZDUtNDlhYS05Mzc2LTNlYjdlZDQ5ZjU1ZC5qcGc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQwOTI1JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MDkyNVQwMzA4MDdaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT03YTI5MzdkN2ZmYjM4NjM2N2Q1OTQxYThkODMwZDc4ZDMzNzJmYmU0OTZlZjc5ZTc1NjJmYWFjMzhkNzU4MGU1JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.tJ5Y0W3MR1Ea8kdrNeVhu0JVn9plHv65QuvZbqNvYyY)
 
 ### Component Design
 - **Reusable Components**: Design components to be reusable across different parts of the application (e.g., buttons, input fields, cards).
@@ -70,10 +72,10 @@ The front-end of EasyOrder is designed to provide an intuitive and responsive us
 
 ### Design and Models
 - **Database Model**:  
-  ![Database Model](https://private-user-images.githubusercontent.com/120411525/370538670-2584394f-d10a-4a20-b34b-41bf8fe96b15.jpg?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MjcyMzQwNTgsIm5iZiI6MTcyNzIzMzc1OCwicGF0aCI6Ii8xMjA0MTE1MjUvMzcwNTM4NjcwLTI1ODQzOTRmLWQxMGEtNGEyMC1iMzRiLTQxYmY4ZmU5NmIxNS5qcGc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQwOTI1JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MDkyNVQwMzA5MThaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0zZjIwNGZlNjE1ZWY4MDVkMjljNGRkOGZlNmM2YzIyYmJmYzMzNDlhN2ExODIxODkwYzRmNjY4MDQzMThlNDliJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.131PbTif6J9wViCc6OJDRzUXgsa-ljvC7IuwCtFvU7A)
+  ![Database Model](https://res.cloudinary.com/dbnfr2vm7/image/upload/v1727305030/Imagen_de_WhatsApp_2024-09-24_a_las_21.45.53_81dbd8bc_eilvtq.jpg)
   
 - **Class Models**:  
-  ![Class Model](https://private-user-images.githubusercontent.com/120411525/370538802-62c819ba-b9bb-4875-b0af-9529b26345cf.jpg?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MjcyMzQwMjksIm5iZiI6MTcyNzIzMzcyOSwicGF0aCI6Ii8xMjA0MTE1MjUvMzcwNTM4ODAyLTYyYzgxOWJhLWI5YmItNDg3NS1iMGFmLTk1MjliMjYzNDVjZi5qcGc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQwOTI1JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MDkyNVQwMzA4NDlaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT03Mjc0ZjQ3MjYyMWZkMjdhZDMxNGMwNDU4ZGYyYWZjY2VlODhiMmMwNmU4NWFjYzk0OTQ5NzBjYjRmZDMwNTBiJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.1y-mf0BQayDrzEdS3isA0ZOVXl3OiYGjHm_qlXUym3Q)
+  ![Class Model](https://res.cloudinary.com/dbnfr2vm7/image/upload/v1727305020/Imagen_de_WhatsApp_2024-09-24_a_las_21.45.53_3f27269c_oc9njk.jpg)
 ---
 
 ## Use Cases
