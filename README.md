@@ -16,6 +16,10 @@
 - **Docker** (Optional): Recommended if you want to use containers for the database.
 - **Git**: To clone the repository.
 
+## Frontend repository
+
+https://github.com/jarenas1/EasyOrder-FRONTEND.git
+
 ## Installation
 
 ### 1. Clone the Repository
